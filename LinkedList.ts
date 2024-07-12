@@ -126,6 +126,16 @@ export class LinkedList<T> {
         return removed.value;
     }
 
+    toArray(): T[] {
+        const array: T[] = [];
+        let node = this._head;
+        while(node !== null) {
+            array.push(node.value);
+            node = node.next;
+        }
+        return array;
+    }
+
     toString() {
         if (this.length === 0) return '[ Empty ]';
         const q = [];
