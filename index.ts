@@ -2,12 +2,13 @@ import { HashMap } from './HashMap';
 
 const map = new HashMap<number>();
 
-
+console.log(map.length());
 console.log(map.set("one", 4));
 console.log(map.set("one", 1));
 console.log(map.set("two", 2));
 
 console.log(map);
+console.log(map.length());
 
 console.log(map.get("one"));
 console.log(map.get("One"));

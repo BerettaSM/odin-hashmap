@@ -16,6 +16,7 @@ export class HashMap<T> {
     private loadFactor: number = 0.75;
 
     private buckets = this.createBuckets(this.capacity);
+    private _length = 0;
 
     set(key: string, value: T): Nullable<T> {
         const index = this.hash(key);
@@ -33,6 +34,7 @@ export class HashMap<T> {
         const existingIndex = bucket.findPred(([entryKey]) => entryKey === key);
 
         if (existingIndex === -1) {
+            this._length++;
             bucket.append([key, value]);
             return null;
         }
@@ -79,11 +81,15 @@ export class HashMap<T> {
 
         const existingIndex = bucket.findPred(([entryKey]) => entryKey === key);
 
-        return !!bucket.removeAt(existingIndex);
+        const removed = !!bucket.removeAt(existingIndex);
+
+        if(removed) this._length--;
+
+        return removed;
     }
 
     length(): number {
-        throw new Error('Not implemented');
+        return this._length;
     }
 
     clear() {
