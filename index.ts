@@ -25,3 +25,12 @@ map.clear();
 
 console.log(map);
 console.log(map.length());
+
+map.set("one", 1);
+map.set("two", 2);
+map.set("three", 3);
+map.set("four", 4);
+map.set("five", 5);
+map.set("six", 6);
+
+console.log(map.entries());

@@ -105,8 +105,10 @@ export class HashMap<T> {
         throw new Error('Not implemented');
     }
 
-    entries(): [string, T][] {
-        throw new Error('Not implemented');
+    entries(): Entry<T>[] {
+        return this.buckets
+            .filter(bucket => bucket !== null)
+            .flatMap(bucket => bucket.toArray());
     }
 
     hash(key: string) {
