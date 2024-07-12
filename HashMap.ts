@@ -62,7 +62,7 @@ export class HashMap<T> {
     }
 
     has(key: string): boolean {
-        throw new Error('Not implemented');
+        return this.get(key) !== null;
     }
 
     remove(key: string): boolean {

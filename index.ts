@@ -10,3 +10,6 @@ console.log(map);
 
 console.log(map.get("one"));
 console.log(map.get("One"));
+
+console.log(map.has("one"));
+console.log(map.has("One"));
