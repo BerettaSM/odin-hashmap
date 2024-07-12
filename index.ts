@@ -20,3 +20,8 @@ console.log(map.remove("not_in_map"));
 console.log(map.remove("two"));
 
 console.log(map);
+
+map.clear();
+
+console.log(map);
+console.log(map.length());

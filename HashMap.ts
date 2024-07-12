@@ -93,7 +93,8 @@ export class HashMap<T> {
     }
 
     clear() {
-        throw new Error('Not implemented');
+        this.buckets = this.createBuckets(this.capacity);
+        this._length = 0;
     }
 
     keys(): string[] {
