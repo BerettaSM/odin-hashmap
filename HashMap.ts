@@ -40,7 +40,7 @@ export class HashMap<T> {
         const existing = bucket.at(existingIndex)!;
         const old = existing[1];
         existing[1] = value;
-        
+
         return old;
     }
 
@@ -67,7 +67,19 @@ export class HashMap<T> {
     }
 
     remove(key: string): boolean {
-        throw new Error('Not implemented');
+        const index = this.hash(key);
+
+        if (index < 0 || index >= this.buckets.length) {
+            throw new Error('Trying to access index out of bound');
+        }
+
+        const bucket = this.buckets[index];
+
+        if (!bucket) return false;
+
+        const existingIndex = bucket.findPred(([entryKey]) => entryKey === key);
+
+        return !!bucket.removeAt(existingIndex);
     }
 
     length(): number {
