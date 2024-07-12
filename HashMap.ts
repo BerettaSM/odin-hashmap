@@ -1,3 +1,6 @@
+import { LinkedList } from './LinkedList';
+import { Nullable } from './helpers';
+
 /*
     Use this when trying to access a bucket.
 
@@ -6,11 +9,39 @@
     }
 */
 
+export type Entry<T> = [string, T];
+
 export class HashMap<T> {
     private capacity: number = 16;
     private loadFactor: number = 0.75;
 
-    set(key: string, value: T) {}
+    private buckets = this.createBuckets(this.capacity);
+
+    set(key: string, value: T): Nullable<T> {
+        const index = this.hash(key);
+
+        if (index < 0 || index >= this.buckets.length) {
+            throw new Error('Trying to access index out of bound');
+        }
+
+        let bucket = this.buckets[index];
+
+        if(bucket === null) {
+            bucket = this.buckets[index] = new LinkedList();
+        }
+
+        const existing = bucket.findElement(([entryKey]) => entryKey === key);
+
+        if(existing) {
+            const old = existing[1];
+            existing[1] = value;
+            return old;
+        }
+        
+        bucket.append([key, value]);
+
+        return null;
+    }
 
     get(key: string): T {
         throw new Error('Not implemented');
@@ -53,5 +84,9 @@ export class HashMap<T> {
         }
 
         return hashCode;
+    }
+
+    private createBuckets(capacity: number): Nullable<LinkedList<Entry<T>>>[] {
+        return Array(capacity).fill(null);
     }
 }
