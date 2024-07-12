@@ -1,4 +1,4 @@
-import { Nullable } from "./helpers";
+import { Nullable, Predicate } from './helpers';
 
 class ListNode<T> {
     constructor(public value: T, public next: Nullable<ListNode<T>> = null) {}
@@ -83,6 +83,17 @@ export class LinkedList<T> {
             index++;
         }
         return node ? index : null;
+    }
+
+    findElement(predicate: Predicate<T>) {
+        let node = this._head;
+        while (node !== null) {
+            if (predicate(node.value)) {
+                return node.value;
+            }
+            node = node?.next ?? null;
+        }
+        return null;
     }
 
     at(index: number) {
