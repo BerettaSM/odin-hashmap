@@ -34,3 +34,5 @@ map.set("five", 5);
 map.set("six", 6);
 
 console.log(map.entries());
+console.log(map.keys());
+console.log(map.values());

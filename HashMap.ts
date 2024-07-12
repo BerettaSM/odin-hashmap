@@ -83,7 +83,7 @@ export class HashMap<T> {
 
         const removed = !!bucket.removeAt(existingIndex);
 
-        if(removed) this._length--;
+        if (removed) this._length--;
 
         return removed;
     }
@@ -92,23 +92,23 @@ export class HashMap<T> {
         return this._length;
     }
 
-    clear() {
+    clear(): void {
         this.buckets = this.createBuckets(this.capacity);
         this._length = 0;
     }
 
     keys(): string[] {
-        throw new Error('Not implemented');
+        return this.entries().map(([key]) => key);
     }
 
     values(): T[] {
-        throw new Error('Not implemented');
+        return this.entries().map(([, value]) => value);
     }
 
     entries(): Entry<T>[] {
         return this.buckets
-            .filter(bucket => bucket !== null)
-            .flatMap(bucket => bucket.toArray());
+            .filter((bucket) => bucket !== null)
+            .flatMap((bucket) => bucket.toArray());
     }
 
     hash(key: string) {
