@@ -30,17 +30,18 @@ export class HashMap<T> {
             bucket = this.buckets[index] = new LinkedList();
         }
 
-        const existing = bucket.findElement(([entryKey]) => entryKey === key);
+        const existingIndex = bucket.findPred(([entryKey]) => entryKey === key);
 
-        if (existing) {
-            const old = existing[1];
-            existing[1] = value;
-            return old;
+        if (existingIndex === -1) {
+            bucket.append([key, value]);
+            return null;
         }
 
-        bucket.append([key, value]);
-
-        return null;
+        const existing = bucket.at(existingIndex)!;
+        const old = existing[1];
+        existing[1] = value;
+        
+        return old;
     }
 
     get(key: string): Nullable<T> {
@@ -54,11 +55,11 @@ export class HashMap<T> {
 
         if (!bucket) return null;
 
-        const existing = bucket.findElement(([entryKey]) => entryKey === key);
+        const existingIndex = bucket.findPred(([entryKey]) => entryKey === key);
 
-        if (!existing) return null;
+        if (existingIndex === -1) return null;
 
-        return existing[1];
+        return bucket.at(existingIndex)![1];
     }
 
     has(key: string): boolean {

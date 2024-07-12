@@ -85,15 +85,18 @@ export class LinkedList<T> {
         return node ? index : null;
     }
 
-    findElement(predicate: Predicate<T>) {
+    findPred(predicate: Predicate<T>) {
+        if(this.length === 0) return -1;
         let node = this._head;
-        while (node !== null) {
+        let index = 0;
+        while (index < this.length && node !== null) {
             if (predicate(node.value)) {
-                return node.value;
+                return index;
             }
             node = node?.next ?? null;
+            index++;
         }
-        return null;
+        return -1;
     }
 
     at(index: number) {
