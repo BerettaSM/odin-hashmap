@@ -26,25 +26,39 @@ export class HashMap<T> {
 
         let bucket = this.buckets[index];
 
-        if(bucket === null) {
+        if (bucket === null) {
             bucket = this.buckets[index] = new LinkedList();
         }
 
         const existing = bucket.findElement(([entryKey]) => entryKey === key);
 
-        if(existing) {
+        if (existing) {
             const old = existing[1];
             existing[1] = value;
             return old;
         }
-        
+
         bucket.append([key, value]);
 
         return null;
     }
 
-    get(key: string): T {
-        throw new Error('Not implemented');
+    get(key: string): Nullable<T> {
+        const index = this.hash(key);
+
+        if (index < 0 || index >= this.buckets.length) {
+            throw new Error('Trying to access index out of bound');
+        }
+
+        const bucket = this.buckets[index];
+
+        if (!bucket) return null;
+
+        const existing = bucket.findElement(([entryKey]) => entryKey === key);
+
+        if (!existing) return null;
+
+        return existing[1];
     }
 
     has(key: string): boolean {
